@@ -6,9 +6,11 @@
 /*   By: mal-ketb <mal-ketb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 19:22:06 by mal-ketb          #+#    #+#             */
-/*   Updated: 2024/01/02 19:35:08 by mal-ketb         ###   ########.fr       */
+/*   Updated: 2024/01/06 21:17:36 by mal-ketb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_printf.h"
 
 int	ft_putchar(char c)
 {
@@ -36,48 +38,33 @@ int	ft_putstr(char *str)
 
 int	ft_putnb(int nb)
 {
-	int	i;
+	int		count;
+	long	n;
 
-	i = 0;
-	if (nb == "-2147483647")
+	count = 0;
+	n = nb;
+	if (n < 0)
 	{
-		write(1, "-2147483647", 11);
-		return (11);
+		count += ft_putchar('-');
+		n = n * -1;
 	}
-	if (nb < 0)
+	if (n >= 10)
 	{
-		i = i + ft_putchar('-');
-		i++;
-		nb = nb * -1;
-	}
-	if (nb >= 10)
-	{
-		i = i + ft_putnbr(nb /10);
-		i = i + ft_putnbr(nb % 10);
+		count += ft_putnb(n / 10);
+		count += ft_putnb(n % 10);
 	}
 	else
-		i = i + ft_putchar(nb + '0');
-	return (i);
+		count += ft_putchar(n % 10 + '0');
+	return (count);
 }
 
 int	ft_unsputnbr(unsigned int nb)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (nb < 0)
-	{
-		i = i + ft_putchar('-');
-		nb = nb * -1;
-	}
 	if (nb >= 10)
-	{
 		i = i + ft_unsputnbr(nb / 10);
-		i = i + ft_unsputnbr(nb % 10);
-	}
-	else
-		i = i + ft_putchar(nb + '0');
+	i = i + ft_putchar(nb % 10 + '0');
 	return (i);
 }
-
-

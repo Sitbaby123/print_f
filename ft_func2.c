@@ -6,28 +6,36 @@
 /*   By: mal-ketb <mal-ketb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 20:38:05 by mal-ketb          #+#    #+#             */
-/*   Updated: 2024/01/02 20:52:42 by mal-ketb         ###   ########.fr       */
+/*   Updated: 2024/01/06 22:40:17 by mal-ketb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_hexanum(unsigned long nb, int caps)
+#include "ft_printf.h"
+
+int	ft_hexanum(unsigned long long nb, int caps)
 {
-	int	i;
-	char *base;
+	int		i;
+	char	*base;
 
 	i = 0;
-	if (nb == 0)
-		return (write(1, "0", 1));
-	if (caps += 32)
-		base = "0123456789abcdef";
-	if caps (-= 32)
+	base = "0123456789abcdef";
+	if (caps)
 		base = "0123456789ABCDEF";
 	if (nb >= 16)
-	{
-		i = i + ft_hexanum(nb / 16, caps);
-		i = i + ft_hexanum(nb % 16, caps);
-	}
+		i += ft_hexanum(nb / 16, caps);
+	i += ft_putchar(base[nb % 16]);
+	return (i);
+}
+
+int	ft_vpointer(unsigned long long pt)
+{
+	int	i;
+
+	i = 0;
+	i += ft_putstr("0x");
+	if (pt == 0)
+		i += ft_putstr("0");
 	else
-		c = c + ft_putchar(base[i]);
-	return (c);
+		i += ft_hexanum(pt, 0);
+	return (i);
 }
